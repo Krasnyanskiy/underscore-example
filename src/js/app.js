@@ -4,14 +4,14 @@ var app = angular.module('SortingApp', []);
 
 app.controller('MainCtrl', ['$scope', function ($scope) {
 
-    var students = [];
-    var isReversible = false;
-    var names = [
-        'Aaron', 'Abdul', 'Conrad', 'Gus', 'Rodolfo',
-        'Levi', 'Rusty', 'Sam', 'Said', 'Rupert',
-        'Tex', 'Jeff', 'Tito', 'Brad', 'Ed',
-        'Jesus', 'Terrel', 'Nick', 'Monty', 'Alicia'
-    ];
+    var isReversible = false,
+        students = [],
+        names = [
+            'Aaron', 'Abdul', 'Conrad', 'Gus', 'Rodolfo',
+            'Levi', 'Rusty', 'Sam', 'Said', 'Rupert',
+            'Tex', 'Jeff', 'Tito', 'Brad', 'Ed',
+            'Jesus', 'Terrel', 'Nick', 'Monty', 'Alicia'
+        ];
 
 
     function Student(name, age, honor, grade) {
@@ -22,11 +22,10 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
     }
 
 
-    function init() {
+    (function init() {
         populate();
         $scope.students = students;
-    }
-    init();
+    })();
 
 
     $scope.sortByName = function () {
@@ -75,6 +74,9 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
 
     $scope.ageStatistic = function () {
         var stat = _.countBy(students, 'age');
+
+        // fixme: replace each _.with _.map
+
         $scope.ageStatistic = _.each(stat, function (k, v) {
             stat[toWords(v)] = k;
             delete stat[v];
@@ -84,7 +86,7 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
 
     function populate() {
         var age, name, honor, max, grade;
-        for (var i = 0; i < 25; i++) {
+        for (var i = 0; i < 11; i++) {
             age = Math.floor(Math.random() * (22 - 17) + 17);
             name = names[Math.floor(Math.random() * names.length)];
             honor = ['true', 'false'][Math.round(Math.random())];
