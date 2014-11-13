@@ -1,8 +1,13 @@
+
+
 'use strict';
+
 
 var app = angular.module('SortingApp', []);
 
+
 app.controller('MainCtrl', ['$scope', function ($scope) {
+
 
     var isReversible = false,
         students = [],
@@ -29,61 +34,54 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
 
 
     $scope.sortByName = function () {
-        if (isReversible) {
-            $scope.students = _.sortBy(students, 'name');
-            isReversible = false;
-        } else {
-            $scope.students = _.sortBy(students, 'name').reverse();
-            isReversible = true;
-        }
+        sortBy('name');
     };
 
 
     $scope.sortByAge = function () {
-        if (isReversible) {
-            $scope.students = _.sortBy(students, 'age');
-            isReversible = false;
-        } else {
-            $scope.students = _.sortBy(students, 'age').reverse();
-            isReversible = true;
-        }
+        sortBy('age');
     };
 
 
     $scope.sortByHonor = function () {
-        if (isReversible) {
-            $scope.students = _.sortBy(students, 'honor');
-            isReversible = false;
-        } else {
-            $scope.students = _.sortBy(students, 'honor').reverse();
-            isReversible = true;
-        }
+        sortBy('honor');
     };
 
 
     $scope.sortByGrade = function () {
-        if (isReversible) {
-            $scope.students = _.sortBy(students, 'grade');
-            isReversible = false;
-        } else {
-            $scope.students = _.sortBy(students, 'grade').reverse();
-            isReversible = true;
-        }
+        sortBy('grade');
     };
 
 
     $scope.ageStatistic = function () {
         var stat = _.countBy(students, 'age');
-
-        // fixme: replace each _.with _.map
-
-        $scope.ageStatistic = _.each(stat, function (k, v) {
+        $scope.ageStatistic = _.each(stat, function (k, v) { // fixme: replace each _.with _.map
             stat[toWords(v)] = k;
             delete stat[v];
         });
     };
 
 
+    /**
+     * sorts users and stores the result in the $scope
+     * sort option could be [grade, name, age, honor]
+     * @param option {string}
+     */
+    function sortBy(option) {
+        if (isReversible) {
+            $scope.students = _.sortBy(students, option);
+            isReversible = false;
+        } else {
+            $scope.students = _.sortBy(students, option).reverse();
+            isReversible = true;
+        }
+
+    }
+
+
+    /**
+     * fills the storage with random data
+     */
     function populate() {
         var age, name, honor, max, grade;
         for (var i = 0; i < 11; i++) {
