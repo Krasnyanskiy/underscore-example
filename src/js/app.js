@@ -55,7 +55,7 @@ app.controller('MainCtrl', ['$scope', function ($scope) {
 
     $scope.ageStatistic = function () {
         var stat = _.countBy(students, 'age');
-        $scope.ageStatistic = _.each(stat, function (k, v) { // fixme: replace each _.with _.map
+        $scope.ageStatistic = _.each(stat, function (k, v) { // fixme: replace _.each with _.map
             stat[toWords(v)] = k;
             delete stat[v];
         });
